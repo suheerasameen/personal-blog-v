@@ -14,60 +14,54 @@ export function PostCard({ post, configuration = {} }: PostCardProps) {
     "order-last border-0 bg-transparent shadow-none sm:order-first sm:col-span-12 lg:col-span-10 lg:col-start-2";
 
   const cardContent = (
-    <div className="grid gap-y-6 sm:grid-cols-10 sm:gap-x-5 sm:gap-y-0 md:items-center md:gap-x-8 lg:gap-x-12">
-      <div className="sm:col-span-5">
-        <div className="mb-4 md:mb-6">
-          <div className="flex flex-wrap gap-3 text-xs uppercase tracking-wider text-muted-foreground md:gap-5 lg:gap-6">
-            {post.data.tags?.map((tag) => (
-              <Link 
-                key={tag} 
-                href={`/tags/${tag}`}
-                className="hover:text-foreground transition-colors cursor-pointer z-10 relative"
-              >
-                {tag}
-              </Link>
-            ))}
-          </div>
-        </div>
-        <h3 className="text-xl font-semibold md:text-2xl lg:text-3xl text-left">
-          <Link href={post.url} className="hover:underline cursor-pointer">
+    <Link
+      href={post.url}
+      className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-4 bg-card/50 px-6 py-8 md:py-10 transition-colors hover:bg-card/80"
+    >
+      <div className="order-2 md:order-1 md:col-span-2 xl:col-span-3 flex h-full flex-col justify-between gap-4">
+        <div className="flex-1 gap-4">
+          <h2 className="font-medium text-lg md:text-xl lg:text-2xl">
             {post.data.title}
-          </Link>
-        </h3>
-        <p className="mt-4 text-muted-foreground md:mt-5 text-left">
-          {post.data.description}
-        </p>
-        <div className="mt-6 flex items-center space-x-4 text-sm md:mt-8">
-          <span className="text-muted-foreground capitalize">
-            {post.data.author || "Anonymous"}
-          </span>
-          <span className="text-muted-foreground">•</span>
-          <span className="text-muted-foreground">
-            {new Date(post.data.date).toDateString()}
-          </span>
+          </h2>
+          <p className="line-clamp-3 overflow-hidden text-ellipsis text-medium text-muted-foreground">
+            {post.data.description}
+          </p>
         </div>
-        <div className="mt-6 flex items-center space-x-2 md:mt-8">
-          <Link
-            href={post.url}
-            className="inline-flex items-center font-semibold hover:underline md:text-base"
-          >
-            <span>Read more</span>
-            <ArrowRight className="ml-2 size-4 transition-transform" />
-          </Link>
-        </div>
-      </div>
-      <div className="order-first sm:order-last sm:col-span-5">
-        <Link href={post.url} className="block">
-          <div className="aspect-[16/9] overflow-clip rounded-lg border border-border">
-            <img
-              src={post.data.image || post.url.replace('/blog/', '/blog-og/') + '/image.png'}
-              alt={post.data.title}
-              className="h-full w-full object-cover transition-opacity duration-200 fade-in hover:opacity-70"
-            />
+        <div className="flex flex-col justify-center gap-4">
+          <div className="group inline-flex items-center gap-2 text-muted-foreground text-sm">
+            <span className="inline-flex items-center gap-1 capitalize">
+              <svg className="size-4 transition-transform hover:scale-125" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              {post.data.author || "Anonymous"}
+            </span>
+            <span>•</span>
+            <span className="inline-flex items-center gap-1">
+              <svg className="size-4 transition-transform hover:scale-125" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+              {new Date(post.data.date).toDateString()}
+            </span>
           </div>
-        </Link>
+        </div>
       </div>
-    </div>
+
+      {(post.data.image || post.url) && (
+        <div className="group relative order-1 md:order-2 col-span-1 inline-flex items-center justify-center transition-transform hover:scale-105">
+          <img
+            width={853}
+            height={554}
+            src={post.data.image || post.url.replace('/blog/', '/blog-og/') + '/image.png'}
+            alt={post.data.title}
+            className="relative rounded-lg object-cover w-full h-auto"
+          />
+        </div>
+      )}
+    </Link>
   );
 
   return CardComponent ? (

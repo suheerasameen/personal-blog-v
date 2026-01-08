@@ -13,10 +13,10 @@ export default function HomePage() {
     <>
       <Hero />
       <Section className="py-8 sm:py-16">
-        <h2 className="text-center font-semibold text-2xl sm:text-3xl md:text-4xl lg:text-5xl">
+        <h2 className="text-center font-semibold text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-['Poppins']">
           <span className="inline-flex items-center gap-3">
             Posts{" "}
-            <Code2 className="size-10 fill-fd-primary/30 text-fd-primary transition-transform hover:rotate-12 hover:scale-125" />
+            <Code2 className="size-10 text-foreground grayscale transition-transform hover:rotate-12 hover:scale-125" />
           </span>
         </h2>
       </Section>

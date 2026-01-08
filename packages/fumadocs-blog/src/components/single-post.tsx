@@ -8,6 +8,7 @@ import {
 import { BlogConfiguration } from "./types";
 
 import { DocsLayout } from "fumadocs-ui/layouts/docs";
+import { RootProvider } from "fumadocs-ui/provider";
 import { Calendar, BookOpen } from "lucide-react";
 import Link from "next/link";
 import { cn } from "./utils";
@@ -132,23 +133,22 @@ export function SinglePost({
         </div>
       </div>
 
-      <DocsLayout
-        nav={{ enabled: false }}
-        tree={{
-          name: "Tree",
-          children: [],
-        }}
-        sidebar={{ enabled: false, prefetch: false, tabs: false }}
-        containerProps={{
-          className: classNames(
-            "flex-row-reverse",
-            "relative container [--fd-nav-height:calc(var(--spacing)*14)] md:[--fd-nav-height:57px]"
-          ),
-        }}
-      >
-        {slot(configuration?.backgroundPattern, null)}
+      <RootProvider>
+        <DocsLayout
+          nav={{ enabled: false }}
+          tree={{
+            name: "Tree",
+            children: [],
+          }}
+          sidebar={{ enabled: false, prefetch: false, tabs: false }}
+          containerProps={{
+            className: classNames(
+              "relative container [--fd-nav-height:calc(var(--spacing)*14)] md:[--fd-nav-height:57px]"
+            ),
+          }}
+        >
+          {slot(configuration?.backgroundPattern, null)}
 
-        <div className="grid grid-cols-4">
           <DocsPage
             toc={page.data.toc}
             full={page.data.full}
@@ -178,8 +178,8 @@ export function SinglePost({
               )}
             </DocsBody>
           </DocsPage>
-        </div>
       </DocsLayout>
+      </RootProvider>
     </>
   );
 }

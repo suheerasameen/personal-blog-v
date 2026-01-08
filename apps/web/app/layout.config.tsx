@@ -2,10 +2,10 @@ import { Icons } from "@/components/icons";
 import type { BaseLayoutProps, LinkItemType } from "fumadocs-ui/layouts/shared";
 import Image from "next/image";
 
-export const title = "blog.waqasishaque — Mostly LLMs, mostly.";
+export const title = "Waqas Ishaque — Full Stack Developer & Security Enthusiast";
 export const description =
-  "Notes on LLMs, agents, automation and development. Tools too. Primarily written for myself.";
-export const owner = "blog.waqasishaque";
+  "Full stack software developer passionate about web development, software engineering, and the latest technologies. I create projects and tutorials to help developers learn and grow.";
+export const owner = "Waqas Ishaque";
 /**
  * Shared layout configurations
  *

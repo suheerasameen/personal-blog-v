@@ -28,22 +28,24 @@ export function PostList({
 
   return (
     <>
-      <section className="relative container px-4 py-8 lg:py-12 lg:px-6 text-left bg-zinc-50/50 dark:bg-zinc-900/50">
-        {slot(configuration?.backgroundPattern, null)}
+      {(heading || description) && (
+        <section className="relative container px-4 py-6 lg:px-6 text-left bg-zinc-50/50 dark:bg-zinc-900/50">
+          {slot(configuration?.backgroundPattern, null)}
 
-        <div className="text-center">
-          <DocsTitle className="dark:text-white capitalize">
-            {heading}
-          </DocsTitle>
-          <DocsDescription className="mt-3 dark:text-gray-300 mb-0">
-            {description}
-          </DocsDescription>
-        </div>
-      </section>
+          <div className="text-center">
+            <DocsTitle className="dark:text-white capitalize">
+              {heading}
+            </DocsTitle>
+            <DocsDescription className="mt-3 dark:text-gray-300 mb-0">
+              {description}
+            </DocsDescription>
+          </div>
+        </section>
+      )}
 
-      <section className="relative container px-4 py-8 lg:py-12 lg:px-6 text-left">
+      <section className="relative container text-left">
         {slot(configuration?.backgroundPattern, null)}
-        <div className="grid divide-y divide-dashed divide-border/70 dark:divide-border">
+        <div className="grid divide-y divide-dashed divide-border/70 border-x border-dashed border-border/70 dark:divide-border dark:border-border">
           {posts
             .filter(
               (post): post is NonNullable<typeof post> => post !== undefined

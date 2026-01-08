@@ -9,28 +9,34 @@ interface GridBackgroundProps {
   baseColor?: string;
   dottedColor?: string;
   maxWidthClass?: string;
+  hideCenter?: boolean;
 }
 
 export const GridBackground: FC<GridBackgroundProps> = ({
   columns = 4,
   className = "",
   maxWidthClass = "container",
+  hideCenter = false,
 }) => {
   // Create array based on column count
-  const columnElements = Array.from({ length: columns }, (_, i) => (
-    <div
-      key={i}
-      className="h-full w-px"
-      style={{
-        backgroundColor: i === 0 ? "var(--grid-base-color)" : "transparent",
-        backgroundImage:
-          i === 0
-            ? "none"
-            : `linear-gradient(180deg, var(--grid-dots-color) 50%, transparent 50%)`,
-        backgroundSize: i === 0 ? "auto" : "1px 8px",
-      }}
-    />
-  ));
+  const columnElements = Array.from({ length: columns }, (_, i) => {
+    // Skip middle columns if hideCenter is true
+    if (hideCenter && i > 0 && i < columns - 1) {
+      return <div key={i} className="h-full w-px" />;
+    }
+    
+    return (
+      <div
+        key={i}
+        className="h-full w-px"
+        style={{
+          backgroundColor: "transparent",
+          backgroundImage: `linear-gradient(180deg, var(--grid-dots-color) 50%, transparent 50%)`,
+          backgroundSize: "1px 8px",
+        }}
+      />
+    );
+  });
 
   return (
     <div
@@ -50,7 +56,11 @@ export const GridBackground: FC<GridBackgroundProps> = ({
             {columnElements}
             <div
               className="absolute top-0 right-0 h-full w-px"
-              style={{ backgroundColor: "var(--grid-base-color)" }}
+              style={{
+                backgroundColor: "transparent",
+                backgroundImage: `linear-gradient(180deg, var(--grid-dots-color) 50%, transparent 50%)`,
+                backgroundSize: "1px 8px",
+              }}
             />
           </div>
         </div>

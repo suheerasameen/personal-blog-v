@@ -3,6 +3,7 @@
 @import "fumadocs-ui/css/preset.css";
 @import "fumadocs-twoslash/twoslash.css";
 @import "tw-animate-css";
+@import "@fuma-comment/react/style.css";
 
 @plugin "tailwindcss-animate";
 
@@ -69,6 +70,10 @@
   html {
     @apply scroll-smooth accent-primary;
   }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif;
+  }
 }
 
 @layer base {
@@ -131,6 +136,17 @@
 .dark ::selection {
   background-color: var(--color-accent);
   color: var(--color-foreground);
+}
+
+/* Fix Fuma Comment emoji picker height */
+[data-radix-popper-content-wrapper] {
+  max-height: 400px !important;
+  height: auto !important;
+}
+
+em-emoji-picker {
+  max-height: 400px !important;
+  height: 400px !important;
 }
 
 .dark [data-hide-on-theme="dark"],

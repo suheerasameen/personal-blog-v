@@ -16,15 +16,15 @@ export function Footer() {
     <footer className={cn("flex flex-col gap-4")}>
       <div
         className={cn(
-          "grid gap-8 text-muted-foreground text-sm sm:grid-cols-3",
-          "container mx-auto sm:gap-16 sm:px-8 sm:py-16",
-          "border-border/70 border-b border-dashed dark:border-border"
+          "grid gap-8 text-muted-foreground text-sm grid-cols-1 md:grid-cols-2 lg:grid-cols-3",
+          "container mx-auto px-6 py-12 sm:gap-16 sm:px-8 sm:py-16",
+          "border-border/70 border-t border-dashed dark:border-border"
         )}
       >
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-6 text-center md:text-left">
           <p className="font-medium text-foreground">Pages</p>
 
-          <ul className="flex flex-col gap-3">
+          <ul className="flex flex-col gap-3 items-center md:items-start">
             <li className="flex items-center gap-2">
               <Link href="/" className="hover:text-foreground transition-colors">
                 Home
@@ -51,10 +51,10 @@ export function Footer() {
           </ul>
         </div>
 
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-6 text-center md:text-left">
           <p className="font-medium text-foreground">Posts</p>
 
-          <ul className="flex flex-col gap-3">
+          <ul className="flex flex-col gap-3 items-center md:items-start">
             {posts.slice(0, 5).map((post, i) => (
               <li key={post.url}>
                 <Link
@@ -69,10 +69,10 @@ export function Footer() {
           </ul>
         </div>
 
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-6 text-center md:text-left">
           <p className="font-medium text-foreground">Socials</p>
 
-          <ul className="flex flex-col gap-3">
+          <ul className="flex flex-col gap-3 items-center md:items-start">
             {navItems
               .filter((item) => item.type === "icon")
               .map((item, i) => (

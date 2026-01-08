@@ -5,16 +5,16 @@ export function createMetadata(override: Metadata): Metadata {
     ...override,
     authors: [
       {
-        name: "blog.waqasishaque",
+        name: "Waqas Ishaque",
         url: "https://blog.waqasishaque.me",
       },
     ],
-    creator: "blog.waqasishaque",
+    creator: "Waqas Ishaque",
     openGraph: {
-      title: override.title ?? "blog.waqasishaque — Mostly LLMs, mostly.",
-      description: override.description ?? "Notes on LLMs, agents, automation and development. Tools too. Primarily written for myself.",
+      title: override.title ?? "Waqas Ishaque — Full Stack Developer & Security Enthusiast",
+      description: override.description ?? "Full stack software developer passionate about web development, software engineering, and the latest technologies.",
       url: "https://blog.waqasishaque.me",
-      siteName: "blogs Waqas ishaque",
+      siteName: "Waqas Ishaque",
       type: "website",
       locale: "en_US",
       ...override.openGraph,

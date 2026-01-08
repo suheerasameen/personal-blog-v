@@ -14,7 +14,7 @@ import type {
   BlogConstants,
   BlogConfiguration,
 } from "@repo/fumadocs-blog/blog";
-import { PostCard } from "@repo/fumadocs-blog/blog";
+import { PostCard as CustomPostCard } from "@/components/post-card";
 import { BlogComments } from "@/components/blog-comments";
 import {
   Brain,
@@ -109,7 +109,16 @@ export function createBlogMetadata(
 
 export function getBlogConfiguration(): BlogConfiguration {
   return {
-    PostCard: PostCard,
+    PostCard: ({ post, configuration }) => (
+      <CustomPostCard
+        title={post.data.title}
+        description={post.data.description ?? ""}
+        image={post.data.image}
+        slug={post.url}
+        author={post.data.author || "Waqas Ishaque"}
+        publishedAt={post.data.date.toISOString()}
+      />
+    ),
     backgroundPattern: {
       enabled: true,
       component: <GridBackground maxWidthClass="container" />,

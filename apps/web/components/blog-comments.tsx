@@ -1,8 +1,12 @@
 "use client";
 
 import { Comments } from "@fuma-comment/react";
+import { createUploadThingStorage } from "@fuma-comment/react/uploadthing";
 import { useRouter } from "next/navigation";
 import { cn } from "@repo/shadverse/lib/utils";
+
+// UploadThing storage configuration
+const storage = createUploadThingStorage();
 
 export function BlogComments({
   slug,
@@ -21,6 +25,7 @@ export function BlogComments({
     <Comments
       page={pageId}
       apiUrl="/api/comments"
+      storage={storage}
       className={cn("w-full", className)}
       auth={{
         type: "api",

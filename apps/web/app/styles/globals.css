@@ -9,7 +9,19 @@
 
 @custom-variant dark (&:is(.dark *));
 
-@import 'fumadocs-ui/style.css';
+@source '../../node_modules/fumadocs-ui/dist/**/*.js';
+
+.max-lg\:hidden {
+  @media (width < 64rem) {
+    display: none;
+  }
+}
+
+.lg\:hidden {
+  @media (width >= 64rem) {
+    display: none;
+  }
+}
 
 @theme {
   --color-background: var(--color-fd-background);

@@ -125,8 +125,12 @@ export function SinglePost({
               <Link
                 key={tag}
                 href={`/tags/${tag}`}
-                className="px-2.5 py-0.5 bg-gray-200 text-gray-800 dark:bg-gray-800 dark:text-gray-300 rounded-full text-xs font-medium hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors cursor-pointer"
+                className="group inline-flex items-center gap-1.5 px-3 py-1.5 bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary-foreground rounded-lg text-sm font-medium hover:bg-primary/20 dark:hover:bg-primary/30 transition-all duration-200 border border-primary/20 hover:border-primary/40 hover:scale-105"
               >
+                <svg className="size-3.5 transition-transform group-hover:scale-110" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+                  <line x1="7" y1="7" x2="7.01" y2="7"></line>
+                </svg>
                 {tag}
               </Link>
             ))}

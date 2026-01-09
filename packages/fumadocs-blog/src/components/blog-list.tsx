@@ -9,12 +9,16 @@ export function RecentPosts({
   description,
   recentPostsLimit = 3,
   configuration,
+  showViewMore = false,
+  viewMoreHref = "/blog",
 }: {
   posts: BlogPost[];
   heading?: string;
   description?: string;
   recentPostsLimit?: number;
   configuration?: BlogConfiguration;
+  showViewMore?: boolean;
+  viewMoreHref?: string;
 }) {
   const sortedPosts = getSortedByDatePosts(posts);
   const displayPosts = sortedPosts.slice(0, recentPostsLimit);
@@ -29,6 +33,8 @@ export function RecentPosts({
       heading={heading}
       description={description}
       configuration={configuration}
+      showViewMore={showViewMore}
+      viewMoreHref={viewMoreHref}
     />
   );
 }

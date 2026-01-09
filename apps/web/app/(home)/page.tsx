@@ -26,6 +26,8 @@ export default function HomePage() {
         posts={posts}
         heading=""
         description=""
+        showViewMore={true}
+        viewMoreHref="/blog"
       />
       <Separator />
     </>

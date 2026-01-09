@@ -2,6 +2,9 @@ import { Pagination } from "./pagination";
 import { DocsTitle, DocsDescription } from "fumadocs-ui/page";
 import { BlogConfiguration, type BlogPost } from "./types";
 import { slot } from "./shared";
+import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
+import { buttonVariants } from "fumadocs-ui/components/ui/button";
 
 export type PostListProps = {
   posts: BlogPost[];
@@ -12,6 +15,8 @@ export type PostListProps = {
   basePath?: string;
   disablePagination?: boolean;
   configuration?: BlogConfiguration;
+  showViewMore?: boolean;
+  viewMoreHref?: string;
 };
 
 export function PostList({
@@ -23,6 +28,8 @@ export function PostList({
   basePath = "/blog",
   disablePagination = false,
   configuration,
+  showViewMore = false,
+  viewMoreHref = "/blog",
 }: PostListProps) {
   // PostCard is now imported directly
 
@@ -61,6 +68,15 @@ export function PostList({
                 );
               }
             })}
+          {showViewMore && (
+            <Link
+              href={viewMoreHref}
+              className="group flex items-center justify-center rounded-none py-5 sm:py-8 text-base sm:text-lg bg-primary text-primary-foreground hover:bg-primary/90 font-medium transition-colors"
+            >
+              View More
+              <ArrowUpRight className="group-hover:-rotate-12 ml-2 size-5 transition-transform" />
+            </Link>
+          )}
         </div>
 
         {!disablePagination && (

@@ -33,25 +33,25 @@ export const baseOptions: BaseLayoutProps = {
 
 export const linkItems: LinkItemType[] = [
   {
-    icon: <Icons.info />,
+    icon: <Icons.posts />,
     text: "Blog",
     url: "/blog",
     active: "url",
   },
   {
-    icon: <Icons.info />,
+    icon: <Icons.computer />,
     text: "Tools",
     url: "/tools",
     active: "nested-url",
   },
   {
-    icon: <Icons.info />,
+    icon: <Icons.tags />,
     text: "Tags",
     url: "/tags",
     active: "url",
   },
   {
-    icon: <Icons.info />,
+    icon: <Icons.user />,
     text: "About",
     url: "/about",
     active: "url",

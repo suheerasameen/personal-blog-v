@@ -8,6 +8,7 @@ import { baseUrl, createMetadata } from "@/lib/metadata";
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import { extractRouterConfig } from "uploadthing/server";
 import { ourFileRouter } from "./api/uploadthing/core";
+import { Cat } from "@/components/cat";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -67,6 +68,7 @@ export default function RootLayout({
         >
           {children}
         </RootProvider>
+        <Cat />
       </body>
     </html>
   );

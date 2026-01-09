@@ -13,10 +13,10 @@ node_modules
 .env.production.local
 # Testing
 coverage
-
+catfolio
 # Turbo
 .turbo
-
+CLAUDE.md
 # Vercel
 .vercel
 

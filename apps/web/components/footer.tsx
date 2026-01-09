@@ -3,6 +3,7 @@ import { getBlogPosts } from "@/lib/source";
 import { cn } from "@repo/shadverse/lib/utils";
 import { getLinks } from "fumadocs-ui/layouts/shared";
 import Link from "next/link";
+import { CatVariantSelector } from "./cat-variant-selector";
 
 export function Footer() {
   const links = getLinks(linkItems, baseOptions.githubUrl);
@@ -87,6 +88,9 @@ export function Footer() {
                   </Link>
                 </li>
               ))}
+            <li>
+              <CatVariantSelector />
+            </li>
           </ul>
         </div>
       </div>

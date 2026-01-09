@@ -1,0 +1,289 @@
+---
+title: How to Add a Playful Kitten to Your Webpage
+description: Add an adorable cursor-following cat to your website with oneko.js - complete with drag-and-drop, hearts on click, and multiple skins.
+date: 2026-01-10
+author: Waqas Ishaque
+tags: [javascript, fun, tutorial]
+image: /images/blog/oneko/drag-2.gif
+---
+
+Ever wanted to add a little personality to your website? Meet **oneko.js** - a delightful JavaScript script that adds a pixel-art kitten that follows your cursor around the page. It's nostalgic, cute, and surprisingly functional.
+
+![The oneko cat following your cursor](/images/blog/oneko/preview.gif)
+
+## What You'll Get
+
+- A cute pixel cat that chases your cursor
+- Drag-and-drop functionality
+- Double-click to make it sleep
+- Right-click to toggle "kuro neko" (black cat) mode
+- Hearts explosion on single click
+- Multiple cat variants (Maia, Tora, Dog, Vaporwave, and more)
+- Scroll awareness - the cat moves with page scrolling
+
+## Quick Start
+
+### 1. Get the Cat Sprite
+
+First, you'll need the cat sprite sheet. Download one from the [spicetify-oneko assets](https://github.com/kyrie25/spicetify-oneko/tree/main/assets/oneko) or use a CDN:
+
+```bash
+# Create a folder for oneko assets
+mkdir -p public/oneko
+
+# Download the classic cat sprite
+curl -o public/oneko/oneko-classic.gif "https://raw.githubusercontent.com/kyrie25/spicetify-oneko/main/assets/oneko/oneko-classic.gif"
+```
+
+### 2. Add the Script
+
+Create `public/oneko/oneko.js`:
+
+```javascript
+(function oneko() {
+  const nekoEl = document.createElement("div");
+  let nekoPosX = 32,
+    nekoPosY = 32,
+    mousePosX = 0,
+    mousePosY = 0,
+    frameCount = 0,
+    idleTime = 0,
+    idleAnimation = null,
+    idleAnimationFrame = 0;
+
+  const nekoSpeed = 10;
+  const spriteSets = {
+    idle: [[-3, -3]],
+    alert: [[-7, -3]],
+    scratchSelf: [[-5, 0], [-6, 0], [-7, 0]],
+    scratchWallN: [[0, 0], [0, -1]],
+    scratchWallS: [[-7, -1], [-6, -2]],
+    scratchWallE: [[-2, -2], [-2, -3]],
+    scratchWallW: [[-4, 0], [-4, -1]],
+    tired: [[-3, -2]],
+    sleeping: [[-2, 0], [-2, -1]],
+    N: [[-1, -2], [-1, -3]],
+    NE: [[0, -2], [0, -3]],
+    E: [[-3, 0], [-3, -1]],
+    SE: [[-5, -1], [-5, -2]],
+    S: [[-6, -3], [-7, -2]],
+    SW: [[-5, -3], [-6, -1]],
+    W: [[-4, -2], [-4, -3]],
+    NW: [[-1, 0], [-1, -1]],
+  };
+
+  function create() {
+    nekoEl.id = "oneko";
+    nekoEl.style.width = "32px";
+    nekoEl.style.height = "32px";
+    nekoEl.style.position = "fixed";
+    nekoEl.style.imageRendering = "pixelated";
+    nekoEl.style.left = `${nekoPosX - 16}px`;
+    nekoEl.style.top = `${nekoPosY - 16}px`;
+    nekoEl.style.zIndex = "9999";
+    nekoEl.style.backgroundImage = "url('/oneko/oneko-classic.gif')";
+    
+    document.body.appendChild(nekoEl);
+
+    document.addEventListener("mousemove", (e) => {
+      mousePosX = e.clientX;
+      mousePosY = e.clientY;
+    });
+
+    setInterval(frame, 100);
+  }
+
+  function setSprite(name, frame) {
+    const sprite = spriteSets[name][frame % spriteSets[name].length];
+    nekoEl.style.backgroundPosition = `${sprite[0] * 32}px ${sprite[1] * 32}px`;
+  }
+
+  function frame() {
+    frameCount++;
+    const diffX = nekoPosX - mousePosX;
+    const diffY = nekoPosY - mousePosY;
+    const distance = Math.sqrt(diffX ** 2 + diffY ** 2);
+
+    if (distance < 48) {
+      idleTime++;
+      if (idleTime > 10) {
+        setSprite("sleeping", Math.floor(idleAnimationFrame / 4));
+        idleAnimationFrame++;
+      } else {
+        setSprite("idle", 0);
+      }
+      return;
+    }
+
+    idleTime = 0;
+    idleAnimationFrame = 0;
+
+    let direction = "";
+    direction += diffY / distance > 0.5 ? "N" : "";
+    direction += diffY / distance < -0.5 ? "S" : "";
+    direction += diffX / distance > 0.5 ? "W" : "";
+    direction += diffX / distance < -0.5 ? "E" : "";
+    
+    if (direction) setSprite(direction, frameCount);
+
+    nekoPosX -= (diffX / distance) * nekoSpeed;
+    nekoPosY -= (diffY / distance) * nekoSpeed;
+    nekoEl.style.left = `${nekoPosX - 16}px`;
+    nekoEl.style.top = `${nekoPosY - 16}px`;
+  }
+
+  create();
+})();
+```
+
+### 3. Load the Script
+
+Add this to your HTML before the closing `</body>` tag:
+
+```html
+<script src="/oneko/oneko.js"></script>
+```
+
+Or if you're using React/Next.js, create a component:
+
+```tsx
+"use client";
+import { useEffect } from "react";
+
+export function Cat() {
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "/oneko/oneko.js";
+    script.async = true;
+    document.body.appendChild(script);
+
+    return () => {
+      document.getElementById("oneko")?.remove();
+    };
+  }, []);
+
+  return null;
+}
+```
+
+## Adding Interactivity
+
+### Drag and Drop
+
+![Dragging the cat around](/images/blog/oneko/drag-1.gif)
+
+Add this to your `create()` function:
+
+```javascript
+nekoEl.addEventListener("mousedown", (e) => {
+  if (e.button !== 0) return;
+  
+  let startX = e.clientX;
+  let startY = e.clientY;
+  let startNekoX = nekoPosX;
+  let startNekoY = nekoPosY;
+
+  const mousemove = (e) => {
+    nekoPosX = startNekoX + e.clientX - startX;
+    nekoPosY = startNekoY + e.clientY - startY;
+    nekoEl.style.left = `${nekoPosX - 16}px`;
+    nekoEl.style.top = `${nekoPosY - 16}px`;
+  };
+
+  const mouseup = () => {
+    window.removeEventListener("mousemove", mousemove);
+    window.removeEventListener("mouseup", mouseup);
+  };
+
+  window.addEventListener("mousemove", mousemove);
+  window.addEventListener("mouseup", mouseup);
+});
+```
+
+### Kuro Neko Mode
+
+![Toggle black cat mode with right-click](/images/blog/oneko/kuroneko.gif)
+
+Right-click to invert the cat's colors:
+
+```javascript
+let kuroNeko = false;
+
+nekoEl.addEventListener("contextmenu", (e) => {
+  e.preventDefault();
+  kuroNeko = !kuroNeko;
+  nekoEl.style.filter = kuroNeko ? "invert(100%)" : "none";
+});
+```
+
+### Hearts on Click
+
+Make hearts explode when clicking the cat:
+
+```javascript
+function explodeHearts() {
+  for (let i = 0; i < 10; i++) {
+    const heart = document.createElement("div");
+    heart.textContent = "❤";
+    heart.style.cssText = `
+      position: fixed;
+      left: ${nekoPosX + (Math.random() - 0.5) * 60}px;
+      top: ${nekoPosY + (Math.random() - 0.5) * 60}px;
+      font-size: 2em;
+      pointer-events: none;
+      animation: heartBurst 1s ease-out forwards;
+      z-index: 9999;
+    `;
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 1000);
+  }
+}
+
+// Add CSS animation
+const style = document.createElement("style");
+style.innerHTML = `
+  @keyframes heartBurst {
+    0% { transform: scale(0); opacity: 1; }
+    100% { transform: scale(1); opacity: 0; }
+  }
+`;
+document.head.appendChild(style);
+
+nekoEl.addEventListener("click", explodeHearts);
+```
+
+## Multiple Variants
+
+![Variant picker](/images/blog/oneko/picker.gif)
+
+The cat comes with several skins. To switch variants, just change the background image:
+
+```javascript
+const variants = ["classic", "dog", "tora", "maia", "vaporwave"];
+
+function setVariant(variant) {
+  nekoEl.style.backgroundImage = `url('/oneko/oneko-${variant}.gif')`;
+  localStorage.setItem("oneko:variant", variant);
+}
+```
+
+Download all variants from the [assets folder](https://github.com/kyrie25/spicetify-oneko/tree/main/assets/oneko).
+
+## Scroll Support
+
+Make the cat react to page scrolling:
+
+```javascript
+document.addEventListener("wheel", (event) => {
+  nekoPosY += event.deltaY / 10;
+  nekoEl.style.top = `${nekoPosY - 16}px`;
+});
+```
+
+## Credits
+
+This implementation is based on [oneko.js by adryd325](https://github.com/adryd325/oneko.js) with enhancements from [kyrie25's spicetify-oneko](https://github.com/kyrie25/spicetify-oneko).
+
+---
+
+That's it! You now have a playful kitten companion on your website. The cat you see following your cursor on this very page is built using these exact techniques. Go ahead, try dragging it around or double-clicking to make it sleep! 🐱

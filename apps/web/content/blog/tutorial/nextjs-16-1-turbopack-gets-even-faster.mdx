@@ -1,0 +1,132 @@
+---
+title: "Next.js 16.1: Turbopack Gets Even Faster"
+description: File system caching, a new bundle analyzer, and easier debugging—Next.js 16.1 is all about developer experience.
+date: 2026-01-10
+author: Waqas Ishaque
+tags: [nextjs, turbopack, dev-tools]
+---
+
+Next.js 16.1 just dropped, and while it's a minor version bump, the improvements are significant. The theme? **Faster development workflows and better tooling.**
+
+## TL;DR
+
+- **Turbopack file system caching** is now stable and on by default—up to 14× faster cold starts
+- **New bundle analyzer** (experimental) to hunt down bloated dependencies
+- **`next dev --inspect`** for easier debugging
+- **20MB smaller installs**
+- **`next upgrade`** command for easier updates
+
+Let's break these down.
+
+---
+
+## Turbopack File System Caching (Stable)
+
+This is the headline feature. Turbopack now caches compiler artifacts to disk, which means restarting your dev server is dramatically faster.
+
+How much faster? According to Vercel's benchmarks:
+
+| Scenario | Improvement |
+|----------|-------------|
+| First route compile | ~10× faster |
+| Large internal Vercel app | ~14× faster |
+
+This is enabled by default with `next dev`. No configuration needed.
+
+The way it works: instead of recompiling everything from scratch when you restart the dev server, Turbopack reads from a disk cache. For large projects, this eliminates the painful wait after hitting `Ctrl+C` and restarting.
+
+```bash
+# Just works
+next dev
+```
+
+Vercel has been dogfooding this internally for a year. Next up: file system caching for `next build`.
+
+---
+
+## Bundle Analyzer (Experimental)
+
+A new interactive tool to analyze your bundles:
+
+```bash
+next experimental-analyze
+```
+
+This launches a UI where you can:
+
+- **Filter bundles by route** - see exactly what code each page pulls in
+- **View import chains** - understand *why* a module is included
+- **Trace server-to-client boundaries** - spot unexpected client-side bundles
+- **See CSS and asset sizes** - not just JavaScript
+- **Switch between client and server views**
+
+The goal: improve Core Web Vitals, reduce lambda cold starts, and catch bloated dependencies before they ship.
+
+Try the [interactive demo](https://turbopack-bundle-analyzer-demo.vercel.sh/) to see it in action.
+
+---
+
+## Easier Debugging with `--inspect`
+
+Previously, debugging a Next.js app required:
+
+```bash
+NODE_OPTIONS=--inspect next dev
+```
+
+This attached the inspector to *all* processes, which was noisy and confusing.
+
+Now:
+
+```bash
+next dev --inspect
+```
+
+Clean, simple, and attaches only to the process running your code. Works with VS Code, Chrome DevTools, or any Node.js debugger.
+
+---
+
+## Improved `serverExternalPackages`
+
+If you've ever had to externalize a transitive dependency (like `sqlite` used internally by another package), you know the pain. You'd have to add it to your own `package.json` even though it's not your direct dependency.
+
+Next.js 16.1 fixes this for Turbopack. Transitive dependencies in `serverExternalPackages` are now resolved automatically. No more leaking implementation details into your package manifest.
+
+---
+
+## Other Updates
+
+- **20MB smaller installs** - Turbopack caching layer simplifications
+- **`next upgrade` command** - Run this to upgrade Next.js versions easily
+- **MCP `get_routes` tool** - The DevTools MCP server can now list all routes in your app
+- **`generateStaticParams` timing** - Now logged in dev for visibility
+- **Build worker logging** - `next build` shows thread count for better debugging
+- **Improved async import bundling** - Fewer chunks in development
+- **Relative source map paths** - Better Node.js compatibility
+
+---
+
+## How to Upgrade
+
+```bash
+# Automated upgrade
+npx @next/codemod@canary upgrade latest
+
+# Manual upgrade
+npm install next@latest react@latest react-dom@latest
+
+# Or start fresh
+npx create-next-app@latest
+```
+
+---
+
+## My Take
+
+This release is all about polish. Turbopack file system caching alone is worth the upgrade—if you're on a large codebase, the difference is immediately noticeable.
+
+The bundle analyzer is still experimental, but it's already more useful than the old webpack-bundle-analyzer approach. Having it integrated into Next.js means it understands the framework's boundaries (server components, client components, dynamic imports) in a way third-party tools can't.
+
+The `--inspect` flag is a small quality-of-life improvement, but it's the kind of thing that makes you wonder why it wasn't always like this.
+
+Solid release. Upgrade if you haven't already.

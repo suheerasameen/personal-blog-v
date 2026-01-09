@@ -5,6 +5,7 @@ import { getBlogConfiguration } from "@/blog-configuration";
 import { Section } from "@/components/section";
 import Separator from "@/components/separator";
 import { Code2 } from "lucide-react";
+import { NewsletterCTA } from "@/components/newsletter-cta";
 
 export default function HomePage() {
   const posts = getBlogPosts().slice(0, 3);
@@ -30,6 +31,7 @@ export default function HomePage() {
         viewMoreHref="/blog"
       />
       <Separator />
+      <NewsletterCTA />
     </>
   );
 }

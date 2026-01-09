@@ -15,7 +15,7 @@ interface SeriesListProps {
 
 export function SeriesList({
   seriesSlug,
-  configuration = {},
+  configuration = { config: { blogBase: "/blog", pageSize: 5 } },
   posts = [],
   getSeriesBySlug,
 }: SeriesListProps) {
@@ -92,7 +92,7 @@ export function SeriesList({
                           {post.data.tags.map((tag: string) => (
                             <span
                               key={tag}
-                              className="px-2 py-0.5 bg-gray-100 dark:bg-gray-700 rounded-full text-xs"
+                              className="px-2 py-0.5 bg-primary text-primary-foreground rounded-md text-xs font-medium"
                             >
                               {tag}
                             </span>

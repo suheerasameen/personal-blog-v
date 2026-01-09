@@ -2,20 +2,20 @@
 
 (async function oneko() {
   const nekoEl = document.createElement("div");
-  let nekoPosX = 32,
-    nekoPosY = 32,
+  let nekoPosX = window.innerWidth - 32,
+    nekoPosY = window.innerHeight - 32,
     mousePosX = 0,
     mousePosY = 0,
     frameCount = 0,
     idleTime = 0,
     idleAnimation = null,
     idleAnimationFrame = 0,
-    forceSleep = false,
+    forceSleep = true,
     grabbing = false,
     grabStop = true,
     nudge = false,
     kuroNeko = false,
-    variant = "classic";
+    variant = "maia";
 
   function parseLocalStorage(key, fallback) {
     try {
@@ -134,11 +134,24 @@
 
     document.body.appendChild(nekoEl);
 
+    // Set sleeping sprite immediately if starting asleep
+    if (forceSleep) {
+      const sleepSprite = spriteSets.sleeping[0];
+      nekoEl.style.backgroundPosition = `${sleepSprite[0] * 32}px ${sleepSprite[1] * 32}px`;
+    }
+
     window.addEventListener("mousemove", (e) => {
       if (forceSleep) return;
 
       mousePosX = e.clientX;
       mousePosY = e.clientY;
+    });
+
+    // Scroll support - move cat with scroll (only when not sleeping)
+    document.addEventListener("wheel", (event) => {
+      if (forceSleep) return;
+      nekoPosY += event.deltaY / 10;
+      updatePos();
     });
 
     window.addEventListener("resize", () => {
@@ -210,6 +223,9 @@
     });
 
     nekoEl.addEventListener("dblclick", sleep);
+    
+    // Single click shows hearts
+    nekoEl.addEventListener("click", explodeHearts);
 
     window.onekoInterval = setInterval(frame, 100);
 
@@ -221,6 +237,49 @@
         nekoEl.style.backgroundImage = `url('/oneko/oneko-${variant}.gif')`;
       }
     });
+    
+    // Add heart animation styles
+    const style = document.createElement('style');
+    style.innerHTML = `
+      @keyframes heartBurst {
+        0% { transform: scale(0); opacity: 1; }
+        100% { transform: scale(1); opacity: 0; }
+      }
+      .oneko-heart {
+        position: fixed;
+        font-size: 2em;
+        animation: heartBurst 1s ease-out;
+        animation-fill-mode: forwards;
+        color: #ab9df2;
+        pointer-events: none;
+        z-index: 9999;
+      }
+    `;
+    document.head.appendChild(style);
+  }
+  
+  function explodeHearts() {
+    // Get cat's position from the element's style (it's positioned at nekoPosX-16, nekoPosY-16)
+    // So the center of the 32px cat is at nekoPosX-16+16 = nekoPosX, nekoPosY-16+16 = nekoPosY
+    // But since the cat element uses left/top with -16 offset, let's get the actual center
+    const catLeft = parseFloat(nekoEl.style.left) + 16;
+    const catTop = parseFloat(nekoEl.style.top) + 16;
+
+    for (let i = 0; i < 10; i++) {
+      const heart = document.createElement('div');
+      heart.className = 'oneko-heart';
+      heart.textContent = '❤';
+      const offsetX = (Math.random() - 0.5) * 60;
+      const offsetY = (Math.random() - 0.5) * 60;
+      heart.style.left = `${catLeft + offsetX}px`;
+      heart.style.top = `${catTop + offsetY}px`;
+      heart.style.transform = `translate(-50%, -50%) rotate(${Math.random() * 360}deg)`;
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 1000);
+    }
   }
 
   function getSprite(name, frame) {
@@ -310,19 +369,15 @@
     const diffY = nekoPosY - mousePosY;
     const distance = Math.sqrt(diffX ** 2 + diffY ** 2);
 
-    // Cat has to sleep on top of the progress bar
-    if (forceSleep && Math.abs(diffY) < nekoSpeed && Math.abs(diffX) < nekoSpeed) {
-      // Make the cat sleep exactly on the top of the progress bar
-      nekoPosX = mousePosX;
-      nekoPosY = mousePosY;
-      nekoEl.style.left = `${nekoPosX - 16}px`;
-      nekoEl.style.top = `${nekoPosY - 16}px`;
-
-      idle();
+    // When forceSleep is true, just stay in place and show sleeping animation
+    if (forceSleep) {
+      idleAnimation = "sleeping";
+      idleAnimationFrame += 1;
+      setSprite("sleeping", Math.floor(idleAnimationFrame / 4));
       return;
     }
 
-    if ((distance < nekoSpeed || distance < 48) && !forceSleep) {
+    if (distance < nekoSpeed || distance < 48) {
       idle();
       return;
     }
@@ -350,6 +405,10 @@
     nekoPosX = Math.min(Math.max(16, nekoPosX), window.innerWidth - 16);
     nekoPosY = Math.min(Math.max(16, nekoPosY), window.innerHeight - 16);
 
+    updatePos();
+  }
+
+  function updatePos() {
     nekoEl.style.left = `${nekoPosX - 16}px`;
     nekoEl.style.top = `${nekoPosY - 16}px`;
   }

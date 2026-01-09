@@ -16,6 +16,7 @@ import type {
 } from "@repo/fumadocs-blog/blog";
 import { PostCard as CustomPostCard } from "@/components/post-card";
 import { BlogComments } from "@/components/blog-comments";
+import { Tag } from "@/components/tag";
 import {
   Brain,
   Book as LucideBook,
@@ -127,7 +128,7 @@ export function getBlogConfiguration(): BlogConfiguration {
     Popover,
     PopoverContent,
     PopoverTrigger,
-    Badge,
+    Badge: Tag,
     Book,
     Card,
     Comments: BlogComments,

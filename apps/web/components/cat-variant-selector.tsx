@@ -10,7 +10,7 @@ declare global {
 }
 
 export function CatVariantSelector() {
-    const [variant, setVariant] = useState("classic");
+    const [variant, setVariant] = useState("maia");
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {

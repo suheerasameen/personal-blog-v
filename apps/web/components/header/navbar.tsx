@@ -19,7 +19,7 @@ export const Navbar = (props: HTMLAttributes<HTMLElement>) => {
         id="nd-nav"
         {...props}
         className={cn(
-          "sticky top-[var(--fd-banner-height)] z-30 box-content w-full bg-fd-background/80 backdrop-blur-lg transition-colors",
+          "sticky top-[var(--fd-banner-height)] z-30 box-content w-full bg-background backdrop-blur-lg transition-colors",
           "border-border/70 border-b border-dashed dark:border-border",
           // value.length > 0 ? 'shadow-lg' : 'shadow-xs',
           props.className

@@ -22,6 +22,7 @@ Personal blog and development tools built with Next.js 15, Fumadocs, Better Auth
 - Google OAuth App (optional)
 - UploadThing account
 
+
 ## Environment Variables
 
 Create `apps/web/.env.local`:

@@ -24,15 +24,11 @@ export const baseOptions: BaseLayoutProps = {
           alt="waqasishaque logo"
           className="rounded-full"
         />{" "}
-        Waqas Ishaque      </>
+        Waqas Ishaque
+      </>
     ),
   },
-  links: [
-    {
-      text: "Docs",
-      url: "/docs",
-    },
-  ],
+  githubUrl: "https://github.com/WaqasIshaque1",
 };
 
 export const linkItems: LinkItemType[] = [
@@ -59,13 +55,6 @@ export const linkItems: LinkItemType[] = [
     text: "About",
     url: "/about",
     active: "url",
-  },
-  {
-    icon: <Icons.gitHub />,
-    text: "GitHub",
-    url: "https://github.com/WaqasIshaque1",
-    external: true,
-    type: "icon",
   },
   {
     icon: <Icons.linkedin />,

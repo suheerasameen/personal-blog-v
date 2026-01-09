@@ -9,6 +9,7 @@ export default function Layout({ children }: { children: ReactNode }) {
   return (
     <HomeLayout
       {...baseOptions}
+      links={linkItems}
       nav={{
         component: (
           <Header

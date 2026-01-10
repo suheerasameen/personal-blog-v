@@ -17,6 +17,8 @@ import type {
 import { PostCard as CustomPostCard } from "@/components/post-card";
 import { BlogComments } from "@/components/blog-comments";
 import { Tag } from "@/components/tag";
+import { Feedback } from "@/src/components/feedback/client";
+import { onPageFeedbackAction } from "@/src/lib/github";
 import {
   Brain,
   Book as LucideBook,
@@ -132,6 +134,8 @@ export function getBlogConfiguration(): BlogConfiguration {
     Book,
     Card,
     Comments: BlogComments,
+    Feedback,
+    onFeedbackAction: onPageFeedbackAction,
     cn,
     config: {
       blogBase: blogConstants.blogBase,

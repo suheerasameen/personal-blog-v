@@ -18,6 +18,8 @@ import { SeriesPopoverContent } from "./series-info";
 import { getSeriesInfo } from "./utils";
 import { slot } from "./shared";
 import { createUrlUtils } from "./url-utils";
+import { Feedback } from "@/src/components/feedback/client";
+import { onPageFeedbackAction } from "@/src/lib/github";
 
 interface SinglePostProps {
   page: any;
@@ -28,6 +30,8 @@ interface SinglePostProps {
   getCategoryBySlug: (slug: string) => any;
   mdxComponents: any;
   posts?: any[];
+  prevPost?: any;
+  nextPost?: any;
 }
 
 export function SinglePost({
@@ -39,6 +43,8 @@ export function SinglePost({
   getCategoryBySlug,
   mdxComponents,
   posts = [],
+  prevPost,
+  nextPost,
 }: SinglePostProps) {
   // Use configuration.cn if available, otherwise use the imported cn
   const classNames = configuration?.cn || cn;
@@ -158,7 +164,11 @@ export function SinglePost({
             full={page.data.full}
             lastUpdate={lastUpdate}
             footer={{
-              enabled: false,
+              enabled: !!(prevPost || nextPost),
+              items: {
+                previous: prevPost ? { name: prevPost.data.title, url: prevPost.url } : undefined,
+                next: nextPost ? { name: nextPost.data.title, url: nextPost.url } : undefined,
+              },
             }}
             tableOfContent={{
               style: "clerk",
@@ -173,10 +183,15 @@ export function SinglePost({
             <DocsBody>
               <MDX configuration={mdxComponents} />
 
+              {/* Feedback Section */}
+              <div className="mt-8 mb-4">
+                <Feedback onSendAction={onPageFeedbackAction} />
+              </div>
+
               {/* Comments Section */}
               {configuration?.Comments && (
-                <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-800">
-                  <h2 className="text-2xl font-bold mb-6">Comments</h2>
+                <div className="mt-2 text-left">
+                  <h2 className="text-2xl font-bold mb-4">Comments</h2>
                   <configuration.Comments slug={page.url} />
                 </div>
               )}

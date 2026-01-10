@@ -5,25 +5,38 @@ export const dynamic = "force-static";
 export const revalidate = false;
 
 export async function generateOGImage(title: string) {
-  // Load Inter from Google Fonts - using the correct API endpoint
+  // Load Inter from Google Fonts
   const interFont = await fetch(
-    "https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap"
-  ).then((res) => res.text())
-    .then((css) => {
-      // Extract the font URL from the CSS
-      const match = css.match(/src: url\(([^)]+)\)/);
-      if (match) return fetch(match[1]).then((res) => res.arrayBuffer());
-      return null;
-    });
+    "https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap",
+    { headers: { "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" } }
+  ).then((res) => {
+    if (!res.ok) throw new Error("Failed to fetch Inter font");
+    return res.text();
+  }).then((css) => {
+    const match = css.match(/src: url\(([^)]+)\)/);
+    if (match && match[1]) return fetch(match[1]).then((res) => res.arrayBuffer());
+    console.error("Failed to extract font URL from Inter CSS");
+    return null;
+  }).catch(e => {
+    console.error("Error loading Inter font:", e);
+    return null;
+  });
 
   const sourceCodeFont = await fetch(
-    "https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@500&display=swap"
-  ).then((res) => res.text())
-    .then((css) => {
-      const match = css.match(/src: url\(([^)]+)\)/);
-      if (match) return fetch(match[1]).then((res) => res.arrayBuffer());
-      return null;
-    });
+    "https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@500&display=swap",
+    { headers: { "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" } }
+  ).then((res) => {
+    if (!res.ok) throw new Error("Failed to fetch Source Code Pro font");
+    return res.text();
+  }).then((css) => {
+    const match = css.match(/src: url\(([^)]+)\)/);
+    if (match && match[1]) return fetch(match[1]).then((res) => res.arrayBuffer());
+    console.error("Failed to extract font URL from Source Code Pro CSS");
+    return null;
+  }).catch(e => {
+    console.error("Error loading Source Code Pro font:", e);
+    return null;
+  });
 
   return new ImageResponse(
     (

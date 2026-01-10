@@ -12,6 +12,7 @@ Personal blog and development tools built with Next.js 15, Fumadocs, Better Auth
 - Fuma Comment (Comments)
 - Drizzle ORM + PostgreSQL
 - UploadThing (Image uploads)
+- GitHub Discussions (Feedback)
 - Turborepo (Monorepo)
 
 ## Prerequisites
@@ -44,6 +45,10 @@ GOOGLE_CLIENT_SECRET="your_google_client_secret"
 
 # UploadThing (for image uploads in comments)
 UPLOADTHING_TOKEN="your_uploadthing_token"
+
+# GitHub App (for Feedback)
+GITHUB_APP_ID="your_app_id"
+GITHUB_APP_PRIVATE_KEY="your_private_key_pem"
 ```
 
 ## Installation
@@ -82,6 +87,18 @@ Visit http://localhost:3000
 1. Go to https://uploadthing.com/dashboard
 2. Sign up and create an app
 3. Copy secret token to `.env.local` as `UPLOADTHING_TOKEN`
+
+### Feedback Feature Setup (GitHub Discussions)
+To enable the "Was this helpful?" feedback feature:
+1. Create a **GitHub App** in your account settings.
+2. Generate a **Private Key** and download the `.pem` file.
+3. Install the App in your repository.
+4. Create a Discussion Category named **"Docs Feedback"** in your repo.
+5. Add variables to `.env.local`:
+```env
+GITHUB_APP_ID="your_app_id"
+GITHUB_APP_PRIVATE_KEY="-----BEGIN RSA PRIVATE KEY-----\n..."
+```
 
 ## Deployment to Vercel
 

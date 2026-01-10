@@ -114,6 +114,11 @@ export async function BlogWrapper({
     const lastUpdate = lastModified ? new Date(lastModified) : undefined;
     const tags = page?.data.tags ?? [];
 
+    // Calculate previous and next posts
+    const currentIndex = sortedPosts.findIndex((p) => p.url === page.url);
+    const prevPost = currentIndex < sortedPosts.length - 1 ? sortedPosts[currentIndex + 1] : null;
+    const nextPost = currentIndex > 0 ? sortedPosts[currentIndex - 1] : null;
+
     return (
       <SinglePost
         page={page}
@@ -124,6 +129,8 @@ export async function BlogWrapper({
         getCategoryBySlug={getCategoryBySlug}
         mdxComponents={mdxComponents}
         posts={sortedPosts}
+        prevPost={prevPost}
+        nextPost={nextPost}
       />
     );
   }

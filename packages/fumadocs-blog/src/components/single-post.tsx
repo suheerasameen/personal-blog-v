@@ -18,8 +18,6 @@ import { SeriesPopoverContent } from "./series-info";
 import { getSeriesInfo } from "./utils";
 import { slot } from "./shared";
 import { createUrlUtils } from "./url-utils";
-import { Feedback } from "@/src/components/feedback/client";
-import { onPageFeedbackAction } from "@/src/lib/github";
 
 interface SinglePostProps {
   page: any;
@@ -184,9 +182,11 @@ export function SinglePost({
               <MDX configuration={mdxComponents} />
 
               {/* Feedback Section */}
-              <div className="mt-8 mb-4">
-                <Feedback onSendAction={onPageFeedbackAction} />
-              </div>
+              {configuration?.Feedback && configuration?.onFeedbackAction && (
+                <div className="mt-8 mb-4">
+                  <configuration.Feedback onSendAction={configuration.onFeedbackAction} />
+                </div>
+              )}
 
               {/* Comments Section */}
               {configuration?.Comments && (

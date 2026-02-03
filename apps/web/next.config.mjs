@@ -24,6 +24,14 @@ const config = {
     "oxc-transform",
     "twoslash",
   ],
+  async rewrites() {
+    return [
+      {
+        source: '/blog/:path*.mdx',
+        destination: '/llms.mdx/blog/:path*',
+      },
+    ];
+  },
 };
 
 export default withMDX(config);

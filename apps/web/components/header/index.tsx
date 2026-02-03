@@ -20,12 +20,13 @@ import type { LinkItemType } from "fumadocs-ui/layouts/links";
 import { SearchOnly } from "fumadocs-ui/provider";
 import { ChevronDown, Languages } from "lucide-react";
 import { ThemeToggle } from "../theme-toggle";
+import { AISearchTrigger } from "../ai/ai-search-trigger";
 import { Menu, MenuContent, MenuLinkItem, MenuTrigger } from "./menu";
 import { Navbar, NavbarMenuLink } from "./navbar";
 import { cn } from "@repo/shadverse/lib/utils";
 
 export const Header = ({
-  nav: { enableSearch = true, ...nav } = {},
+  nav = {},
   i18n = false,
   finalLinks,
 }: HomeLayoutProps & {
@@ -59,12 +60,11 @@ export const Header = ({
           ))}
       </NavigationMenuList>
       <div className="flex flex-1 flex-row items-center justify-end lg:gap-1.5">
-        {enableSearch ? (
-          <SearchOnly>
-            <SearchToggle className="lg:hidden" />
-            <LargeSearchToggle className="w-full max-w-[240px] max-lg:hidden" />
-          </SearchOnly>
-        ) : null}
+        <SearchOnly>
+          <SearchToggle className="lg:hidden" />
+          <LargeSearchToggle className="w-full max-w-[240px] max-lg:hidden" />
+        </SearchOnly>
+        <AISearchTrigger />
         {/* <ThemeToggle className='max-lg:hidden' /> */}
         <ThemeToggle className="max-lg:hidden" />
         {navItems.filter(isSecondary).map((item, i) => (
@@ -127,7 +127,7 @@ const NavbarLinkItem = ({
       if (child.type === "custom")
         return <div key={j.toString()}>{child.children}</div>;
 
-      const { banner, footer, ...rest } = child.menu ?? {};
+      const { banner, ...rest } = child.menu ?? {};
 
       return (
         <NavbarMenuLink key={j.toString()} href={child.url} {...rest}>
@@ -143,7 +143,6 @@ const NavbarLinkItem = ({
               {child.description}
             </p>
           ) : null}
-          {footer}
         </NavbarMenuLink>
       );
     });

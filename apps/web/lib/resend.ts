@@ -1,4 +1,5 @@
 import { Resend, type UpdateContactOptions } from 'resend';
+import { getBaseUrl } from './url';
 
 const resend = new Resend(process.env.RESEND_API_KEY as string);
 
@@ -62,8 +63,8 @@ export async function sendWelcomeEmail({
   posts?: BlogPost[];
 }) {
   const EMAIL_FROM = process.env.EMAIL_FROM as string;
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-  
+  const baseUrl = getBaseUrl();
+
   if (!EMAIL_FROM) throw new Error('Missing EMAIL_FROM environment variable');
   if (!firstName || !to) throw new Error('Missing required email fields');
 

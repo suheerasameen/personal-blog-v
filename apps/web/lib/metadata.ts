@@ -1,19 +1,22 @@
 import type { Metadata } from "next/types";
+import { getBaseUrl, baseUrl } from "./url";
 
 export function createMetadata(override: Metadata): Metadata {
+  const siteUrl = getBaseUrl();
+
   return {
     ...override,
     authors: [
       {
         name: "Waqas Ishaque",
-        url: "https://blog.waqasishaque.me",
+        url: siteUrl,
       },
     ],
     creator: "Waqas Ishaque",
     openGraph: {
       title: override.title ?? "Waqas Ishaque — Full Stack Developer & Security Enthusiast",
       description: override.description ?? "Full stack software developer passionate about web development, software engineering, and the latest technologies.",
-      url: "https://blog.waqasishaque.me",
+      url: siteUrl,
       siteName: "Waqas Ishaque",
       type: "website",
       locale: "en_US",
@@ -51,7 +54,5 @@ export function createMetadata(override: Metadata): Metadata {
   };
 }
 
-export const baseUrl =
-  process.env.NODE_ENV === "development" || !process.env.NEXT_PUBLIC_SITE_URL
-    ? new URL("http://localhost:3000")
-    : new URL(`https://${process.env.NEXT_PUBLIC_SITE_URL}`);
+export { baseUrl };
+

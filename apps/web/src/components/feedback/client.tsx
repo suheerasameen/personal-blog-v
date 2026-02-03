@@ -13,7 +13,13 @@ import { Collapsible, CollapsibleContent } from '../ui/collapsible';
 import { cva } from 'class-variance-authority';
 import { usePathname } from 'next/navigation';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
-import type { FeedbackBlockProps } from 'fumadocs-core/mdx-plugins/remark-feedback-block';
+
+// Define FeedbackBlockProps locally since fumadocs-core/mdx-plugins/remark-feedback-block doesn't exist
+interface FeedbackBlockProps {
+  id: string;
+  body?: string;
+}
+
 import {
   actionResponse,
   blockFeedback,

@@ -6,6 +6,7 @@ import {
     type ActionResponse,
     type PageFeedback,
 } from '@/src/components/feedback/schema';
+import { getBaseUrl } from '@/lib/url';
 
 export const repo = 'personal-blog';
 export const owner = 'WaqasIshaque1';
@@ -76,7 +77,7 @@ async function getFeedbackDestination() {
 export async function onPageFeedbackAction(feedback: PageFeedback): Promise<ActionResponse> {
     'use server';
     feedback = pageFeedback.parse(feedback);
-    const domain = 'https://blog.waqasishaque.me';
+    const domain = getBaseUrl();
     const fullUrl = `${domain}${feedback.url}`;
 
     const body = `

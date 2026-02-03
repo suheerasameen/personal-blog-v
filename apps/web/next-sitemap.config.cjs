@@ -1,9 +1,7 @@
 /** @type {import('next-sitemap').IConfig} */
 
-// Ensure siteUrl is a string, prioritizing the production URL
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL 
-  ? `https://${process.env.NEXT_PUBLIC_SITE_URL}` 
-  : "https://blog.waqasishaque.me"; 
+// Use NEXT_PUBLIC_APP_URL as the single source of truth
+const siteUrl = process.env.NEXT_PUBLIC_APP_URL || "https://blog.waqasishaque.me"; 
 
 module.exports = {
   outDir: "out",

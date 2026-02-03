@@ -70,6 +70,8 @@ export interface BlogConfiguration extends Record<string, any> {
   Book?: React.ComponentType<any>;
   Card?: React.ComponentType<any>;
   Comments?: React.ComponentType<{ slug: string }>;
+  Feedback?: React.ComponentType<{ onSendAction: (feedback: any) => Promise<any> }>;
+  onFeedbackAction?: (feedback: any) => Promise<any>;
   cn?: (...inputs: any[]) => string;
   backgroundPattern?: {
     enabled: boolean;

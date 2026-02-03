@@ -27,6 +27,23 @@ GITHUB_CLIENT_SECRET="your_github_client_secret"
 # Google OAuth (optional)
 GOOGLE_CLIENT_ID="your_google_client_id"
 GOOGLE_CLIENT_SECRET="your_google_client_secret"
+
+# GitHub App (for Feedback)
+GITHUB_APP_ID="your_app_id"
+GITHUB_APP_PRIVATE_KEY="your_private_key_pem"
+
+# Resend (Newsletter)
+RESEND_API_KEY="re_..."
+RESEND_AUDIENCE_ID="your_audience_id"
+EMAIL_FROM="Your Name <me@example.com>"
+
+# Resend Topic IDs
+RESEND_TOPIC_ALL_UPDATES="id_..."
+RESEND_TOPIC_TECH="id_..."
+RESEND_TOPIC_CYBERSECURITY="id_..."
+
+# Better Auth Secret (generated via openssl rand -base64 32 or similar)
+BETTER_AUTH_SECRET="random_secret_string"
 ```
 
 ## OAuth Setup

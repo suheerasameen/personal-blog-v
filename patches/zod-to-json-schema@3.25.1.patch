@@ -1,0 +1,23 @@
+diff --git a/dist/cjs/selectParser.js b/dist/cjs/selectParser.js
+index fbe18d9ae06c1cbf1e4e11f09fb6402bc4ece03a..0f7606b053717c38db68e0f0da3fdd818e35b94b 100644
+--- a/dist/cjs/selectParser.js
++++ b/dist/cjs/selectParser.js
+@@ -1,7 +1,7 @@
+ "use strict";
+ Object.defineProperty(exports, "__esModule", { value: true });
+ exports.selectParser = void 0;
+-const v3_1 = require("zod/v3");
++const v3_1 = require("zod");
+ const any_js_1 = require("./parsers/any.js");
+ const array_js_1 = require("./parsers/array.js");
+ const bigint_js_1 = require("./parsers/bigint.js");
+diff --git a/dist/esm/selectParser.js b/dist/esm/selectParser.js
+index c4a05bb6afde2b082400643b408d78af76707158..890567d463d9558a27d4626fd417b702daad0fe9 100644
+--- a/dist/esm/selectParser.js
++++ b/dist/esm/selectParser.js
+@@ -1,4 +1,4 @@
+-import { ZodFirstPartyTypeKind } from "zod/v3";
++import { ZodFirstPartyTypeKind } from "zod";
+ import { parseAnyDef } from "./parsers/any.js";
+ import { parseArrayDef } from "./parsers/array.js";
+ import { parseBigintDef } from "./parsers/bigint.js";

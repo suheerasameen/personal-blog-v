@@ -7,8 +7,7 @@ export const revalidate = false;
 export async function generateOGImage(title: string) {
   // Load Inter from Google Fonts
   const interFont = await fetch(
-    "https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap",
-    { headers: { "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" } }
+    "https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap"
   ).then((res) => {
     if (!res.ok) throw new Error("Failed to fetch Inter font");
     return res.text();
@@ -23,8 +22,7 @@ export async function generateOGImage(title: string) {
   });
 
   const sourceCodeFont = await fetch(
-    "https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@500&display=swap",
-    { headers: { "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" } }
+    "https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@500&display=swap"
   ).then((res) => {
     if (!res.ok) throw new Error("Failed to fetch Source Code Pro font");
     return res.text();

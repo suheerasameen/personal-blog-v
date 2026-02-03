@@ -25,6 +25,9 @@
   "pnpm": {
     "overrides": {
       "next": "^15.5.9"
+    },
+    "patchedDependencies": {
+      "zod-to-json-schema@3.25.1": "patches/zod-to-json-schema@3.25.1.patch"
     }
   }
 }
